@@ -7,7 +7,6 @@ from tab5 import tab5_func as t5
 #from tab6 import tab6_func_stock as t6
 from tab7 import tab7_func as t7
 from tab8 import tab8_func as t8
-from Jsons import jsonplussrt as rev_j
 import pandas as pd
 import os
 import shutil
@@ -119,16 +118,6 @@ def gr_components():
                 t2_clear_button=gr.Button("クリア")
             download_translated_files = gr.File()
             button2_df=gr.HTML()
-        with gr.Tab("whisperファイルの復活"):
-            gr.Markdown('> whisperがピリオドを打たなくなったSRTファイルの内容にピリオドを追加して、ピリオド区切りのファイルを生成します。')            
-            with gr.Row(equal_height=True):
-                with gr.Column():
-                    jsonfile=gr.File(label="jsonファイルをアップロードしてください。",type='filepath',file_count="multiple")
-                    srtfile=gr.File(label="srtファイルをアップロードしてください。",type='filepath',file_count="multiple")
-                revj=gr.File(label="修復後のファイルです。",type='filepath',file_count="multiple")
-            with gr.Row():
-                json_execute=gr.Button("ファイルの修復",variant='primary')
-                json_clear=gr.Button("クリア")
 
         def update_visibility(extensions):
             return {
@@ -142,49 +131,6 @@ def gr_components():
 
         ### Gradio-Tab3 ###
         
-
-        with gr.Tab("翻訳お手伝い②"):
-        
-            gr.Markdown(">ピリオドに基づく再編は含まれません。主にtxtファイル、ピリオド再編が不要なsrt,vttファイルが対象です。srt,vtt,txtのいずれかの英文ファイルをアップロードすると内容が表示されます。次にGoogle翻訳で得た翻訳をテキストエリアに入力します。「翻訳ファイルを作成」ボタンを押して、入力ファイルと同形式のファイルに保存します。ファイル名に _ja が付加されます。")
-            with gr.Row(equal_height=True):
-                file_input = gr.File(label="Upload file", file_count="single")# ,file_types=['.txt','.srt','.vtt']
-                with gr.Column():
-                    t4_excel_path=gr.File(label="Excel or Word file for Google translate",type="filepath")
-                    output_file = gr.File(label="Translated file" ,type='filepath')
-
-            with gr.Row():
-                t4_clear_button=gr.Button("クリア")
-                translate_button = gr.Button("翻訳ファイル作成", variant='primary')
-            
-            with gr.Row():
-                file_content = gr.HTML(label="File content")
-                translated_text = gr.TextArea(label="Translated text")
-            with gr.Column():
-                with gr.Accordion(label="英語dataframe" ,open=False):
-
-
-                    t4_dataframe=gr.HTML()
-
-        with gr.Tab("配布字幕の再編"):
-               
-            gr.Markdown('> "翻訳お手伝い②"とは異なり、ピリオドを基準に字幕ファイルを再編、翻訳に使います。ピリオド区切りのファイルは字幕の区切りが長くなるため、Subtitle Editなどのアプリで「長い文の自動分割機能」を使うと読みやすくなります。例えば、HealingAlSのvimeo動画に付属する字幕をピリオド区切りに再編し、さらに翻訳した字幕ファイルを作ります')
-            with gr.Row(equal_height=True):
-                vtt_input = gr.File(label="vtt/srtファイルをアップロードしてください。")  # input用のoriginal vtt,srt ",file_types=['srt','vtt']
-                with gr.Column():
-                    vtt_output_2 = gr.File(label="ピリオド区切りの英語字幕ファイルとワードファイルです。",file_count="multiple")  # 分割・結合処理後のvtt,srtファイル
-                    vtt_translated_file = gr.File(label="ピリオド区切りの英文から作った日本語字幕ファイルです。")  # 翻訳されたvtt,srtファイルの出力
-            with gr.Row():
-                t7_clear_button = gr.Button("クリア")  
-                t7_translate_button = gr.Button("日本語vtt,srtの作成",variant='primary')
-            with gr.Row():
-                vtt_output_1 = gr.HTML()  # 分割・結合処理後のHTML表示
-                vtt_translated_content = gr.TextArea(label="翻訳された字幕情報を貼り付けてください。")  # 翻訳処理後の内容を貼り付け。 
-                dummy_file=gr.File(visible=False)       
-
-            with gr.Column():
-                with gr.Accordion(label="英語dataframe" ,open=False):
-                    t7_dataframe=gr.HTML()
-
         with gr.Tab("SRT/VTT→Excel(2言語)"):
             gr.Markdown("> 英語と日本語を並べて読むためのツールです。文字起こしの際に作成できるexcelファイルと同じです。2つのsrtファイルはタイムスタンプが一致している必要があります。")   
             lang_for_xls_choice = gr.Radio(
@@ -239,7 +185,31 @@ def gr_components():
             
             
             return df, excel_path
-                
+        
+        with gr.Tab("翻訳お手伝い②"):
+        
+            gr.Markdown(">ピリオドに基づく再編は含まれません。主にtxtファイル、ピリオド再編が不要なsrt,vttファイルが対象です。srt,vtt,txtのいずれかの英文ファイルをアップロードすると内容が表示されます。次にGoogle翻訳で得た翻訳をテキストエリアに入力します。「翻訳ファイルを作成」ボタンを押して、入力ファイルと同形式のファイルに保存します。ファイル名に _ja が付加されます。")
+            with gr.Row(equal_height=True):
+                file_input = gr.File(label="Upload file", file_count="single")# ,file_types=['.txt','.srt','.vtt']
+                with gr.Column():
+                    t4_excel_path=gr.File(label="Excel or Word file for Google translate",type="filepath")
+                    output_file = gr.File(label="Translated file" ,type='filepath')
+
+            with gr.Row():
+                t4_clear_button=gr.Button("クリア")
+                translate_button = gr.Button("翻訳ファイル作成", variant='primary')
+            
+            with gr.Row():
+                file_content = gr.HTML(label="File content")
+                translated_text = gr.TextArea(label="Translated text")
+            with gr.Column():
+                with gr.Accordion(label="英語dataframe" ,open=False):
+
+
+                    t4_dataframe=gr.HTML()
+
+
+        
         ### Gradio-Tab5 ###
         with gr.Tab("Word/Excel↔SRT/VTT/TXT"):
             gr.Markdown("> 日本語のword,Excelファイルをsrt/vtt/txt形式に戻すためのプログラムです。wordファイルは末尾が[_srt.xlsx][_vtt.xlsx][_txtnr.docx],[_txtr.docx]、あるいは[_srt (1).xlsx]のように（1）の付加された日本語ファイルが対象です。複数のファイルを一度に扱えますが、アップロードは1回で行う必要があります。")  
@@ -278,6 +248,25 @@ def gr_components():
                     download_audio=gr.File(label="ダウンロードリンク")
         '''
         ### Gradio-Tab7 ###
+        with gr.Tab("配布字幕の再編"):
+               
+            gr.Markdown('> "翻訳お手伝い②"とは異なり、ピリオドを基準に字幕ファイルを再編、翻訳に使います。ピリオド区切りのファイルは字幕の区切りが長くなるため、Subtitle Editなどのアプリで「長い文の自動分割機能」を使うと読みやすくなります。例えば、HealingAlSのvimeo動画に付属する字幕をピリオド区切りに再編し、さらに翻訳した字幕ファイルを作ります')
+            with gr.Row(equal_height=True):
+                vtt_input = gr.File(label="vtt/srtファイルをアップロードしてください。")  # input用のoriginal vtt,srt ",file_types=['srt','vtt']
+                with gr.Column():
+                    vtt_output_2 = gr.File(label="ピリオド区切りの英語字幕ファイルとワードファイルです。",file_count="multiple")  # 分割・結合処理後のvtt,srtファイル
+                    vtt_translated_file = gr.File(label="ピリオド区切りの英文から作った日本語字幕ファイルです。")  # 翻訳されたvtt,srtファイルの出力
+            with gr.Row():
+                t7_clear_button = gr.Button("クリア")  
+                t7_translate_button = gr.Button("日本語vtt,srtの作成",variant='primary')
+            with gr.Row():
+                vtt_output_1 = gr.HTML()  # 分割・結合処理後のHTML表示
+                vtt_translated_content = gr.TextArea(label="翻訳された字幕情報を貼り付けてください。")  # 翻訳処理後の内容を貼り付け。 
+                dummy_file=gr.File(visible=False)       
+
+            with gr.Column():
+                with gr.Accordion(label="英語dataframe" ,open=False):
+                    t7_dataframe=gr.HTML()
 
         #tab8
             
@@ -430,17 +419,5 @@ def gr_components():
             inputs=[],
             outputs=[vtt_input,vtt_translated_content,vtt_translated_file,vtt_output_1,vtt_output_2,dummy_file,t7_dataframe]
         )
-        def fn_j_clear():
-            return [],[],[]
-        
-        json_clear.click(
-            fn=fn_j_clear,
-            inputs=[],
-            outputs=[jsonfile,srtfile,revj]
-        )
-        json_execute.click(
-            fn=rev_j.repair,
-            inputs=[jsonfile,srtfile],
-            outputs=[revj]
-        )    
+    
         return UI
