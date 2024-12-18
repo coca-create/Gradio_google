@@ -119,6 +119,7 @@ def gr_components():
                 t2_clear_button=gr.Button("クリア")
             download_translated_files = gr.File()
             button2_df=gr.HTML()
+            
         with gr.Tab("whisperファイルの復活"):
             gr.Markdown('> whisperがピリオドを打たなくなったSRTファイルの内容にピリオドを追加して、ピリオド区切りのファイルを生成します。')            
             with gr.Row(equal_height=True):
@@ -149,8 +150,8 @@ def gr_components():
             with gr.Row(equal_height=True):
                 file_input = gr.File(label="Upload file", file_count="single")# ,file_types=['.txt','.srt','.vtt']
                 with gr.Column():
-                    t4_excel_path=gr.File(label="Excel or Word file for Google translate",type="filepath")
-                    output_file = gr.File(label="Translated file" ,type='filepath')
+                    t4_excel_path=gr.File(label="Excel or Word file for Google translate",type="filepath",file_count="multiple")
+                    output_file = gr.File(label="Translated file" ,type='filepath',file_count="multiple")
 
             with gr.Row():
                 t4_clear_button=gr.Button("クリア")
