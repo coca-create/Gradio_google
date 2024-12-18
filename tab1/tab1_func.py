@@ -122,15 +122,8 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
         Lang = "ja"
     else:
         Lang = "en"
-    if Model=="large-v3-turbo":
-        model_path = os.path.join("/content", "faster-whisper-large-v3-turbo-ct2")
-        if not os.path.exists(model_path):
-            repo_id = "deepdml/faster-whisper-large-v3-turbo-ct2"
-            snapshot_download(repo_id=repo_id, local_dir=model_path, repo_type="model") 
-            print("turbo")               
-        model = WhisperModel(model_path, device=device, compute_type=Computing)
-    else:
-        model = WhisperModel(Model, device=device, compute_type=Computing)
+
+    model = WhisperModel(Model, device=device, compute_type=Computing)
     print(f"using:{device}")
     segments, _ = model.transcribe(File, word_timestamps=True, beam_size=BeamSize, initial_prompt="Hello, I am Scott.", language=Lang, vad_filter=VadFilter)
 
