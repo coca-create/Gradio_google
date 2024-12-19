@@ -13,9 +13,8 @@ import pandas as pd
 from tqdm import tqdm
 from datetime import datetime
 import traceback
-import shutil
-from huggingface_hub import snapshot_download
-
+import ctranslate2
+import csv
 
 def get_audio_duration(filepath):
     try:
@@ -69,8 +68,12 @@ def create_excel_from_srt_c(srt_content, input_file_name):
         })
 
     df = pd.DataFrame(data)
-    temp_dir = tempfile.gettempdir()
+    timestamp_patch = datetime.now().strftime("%Y%m%d%H%M%S")
+    temp_dir = os.path.join(tempfile.gettempdir(), f"tempdir_{timestamp_patch}")
+    os.makedirs(temp_dir, exist_ok=True)
+    
     excel_file_path = os.path.join(temp_dir, excel_file_name)
+    print(f"Temporary directory: {temp_dir}")
     
     with pd.ExcelWriter(excel_file_path, engine='openpyxl') as writer:
         df.to_excel(writer, index=False, sheet_name='Subtitles')
@@ -110,12 +113,7 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
     if not File:
         print("ファイルが提供されていません")
         return"", "", "", [], [], "", "", "", "", "",""
-    
-    save_folder = "/content/drive/My Drive/whisper_uploads"
 
-    File = os.path.join(save_folder, File)
-    
-    
     
     FileName = File
     if Lang == "日本語":
@@ -123,6 +121,22 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
     else:
         Lang = "en"
 
+    with open("replacements_tr.csv", newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        replacements = [row for row in reader]
+
+    with open("dot_replacements_tr.csv", newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        dot_replacements = [row for row in reader]
+        print(dot_replacements)
+
+
+    if device=="cuda":
+        #print(ctranslate2.get_cuda_device_count())
+        if ctranslate2.get_cuda_device_count() == 0:
+             gr.Warning("Cudaが選択されていますが、利用できません。")
+             return "","","",None,None,"","","","","",""
+           
     model = WhisperModel(Model, device=device, compute_type=Computing)
     print(f"using:{device}")
     segments, _ = model.transcribe(File, word_timestamps=True, beam_size=BeamSize, initial_prompt="Hello, I am Scott.", language=Lang, vad_filter=VadFilter)
@@ -175,9 +189,52 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
      
 
     try:
+        def merge_words(words_data):
+            """
+            辞書データの単語を結合し、開始時刻と終了時刻を適切に調整する。
+            
+            Args:
+                words_data (list): [{'start': float, 'end': float, 'word': str}, ...]の形式のデータ。
+            
+            Returns:
+                list: 修正済みの単語リスト [{'start': float, 'end': float, 'word': str}, ...]
+            """
+            merged_data = []
+            append_punctuations = [".", ",", "?", "!", ";", ":"]  # 結合対象の記号
+
+           
+
+            for word_data in words_data:
+                word = word_data["word"]  # 空白を保持
+                if word.startswith(tuple(append_punctuations)) and merged_data:
+                    # 直前の単語に結合 (スペースを保持)
+                    merged_data[-1]["word"] += word
+                    # 終了時刻を更新
+                    merged_data[-1]["end"] = word_data["end"]
+                else:
+                    # 新しい単語として追加
+                    merged_data.append(word_data)
+            
+            return merged_data 
+               
+        words_data=merge_words(words_data)
+        
         #print("ファイル処理-Dot変換")
         for word_info in words_data:
-            word_info["word"] = word_info["word"].replace(" Dr.", " Dr★").replace(" dr.", " dr★")
+            for original, replacement, _, _, _ in replacements:
+                original=re.escape(original)
+                original=rf"\b{original}\b"
+                word_info['word']= re.sub(original,replacement,word_info['word'])
+
+        for word_info in words_data:
+            for dot_original, dot_replacement, _, _, _ in dot_replacements:
+                escaped_dot_original = re.escape(dot_original) 
+                final_dot_original = rf"\b{escaped_dot_original}"
+                word_info["word"] = re.sub(final_dot_original,dot_replacement,word_info["word"])
+               
+
+        print(words_data)
+
 
         # 前処理: words_data内の各wordの中から★を削除する
         cleaned_words_data = []
@@ -185,7 +242,7 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
             cleaned_word_info = {
                 "start": word_info["start"],
                 "end": word_info["end"],
-                "word": word_info["word"].replace("★", ".")
+                "word": word_info["word"].replace("[dot]", ".")
             }
             cleaned_words_data.append(cleaned_word_info)
 
@@ -243,7 +300,7 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
             for entry in srt_entries:
                 start_time = format_timestamp(entry["start"])
                 end_time = format_timestamp(entry["end"])
-                text = entry['text'].replace(" Dr★", " Dr.").replace(" dr★", " dr.").replace("Dr★", "Dr.")
+                text = entry['text'].replace("[dot]", ".")
                 f.write(f"{entry['number']}\n{start_time} --> {end_time}\n{text}\n\n")
 
         with open(srt_output_path, 'r', encoding='utf-8') as f:
@@ -259,7 +316,7 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
         txt_nr_output_file_name = f"{input_file_name}_NR.txt"
         txt_nr_output_path = os.path.join(temp_dir, txt_nr_output_file_name)
         with open(txt_nr_output_path, 'w', encoding='utf-8') as f:
-            txt_nr_content = txt_nr_content.replace(" Dr★", " Dr.").replace(" dr★", " dr.").replace("Dr★", "Dr.")
+            txt_nr_content = txt_nr_content.replace("[dot]","")
             f.write(txt_nr_content)
 
         txt_r_content = ""
@@ -281,7 +338,7 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
         txt_r_output_path = os.path.join(temp_dir, txt_r_output_file_name)
 
         with open(txt_r_output_path, 'w', encoding='utf-8') as f:
-            txt_r_content = txt_r_content.replace(" Dr★", " Dr.").replace(" dr★", " dr.").replace("Dr★", "Dr.")
+            txt_r_content = txt_r_content.replace("[dot]", ".")
             f.write(txt_r_content)
 
         # srtファイルからワードファイルへ変換
@@ -343,9 +400,8 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
         with open(txt_r_output_path, 'r', encoding='utf-8') as file:
             content = file.read()
 
-        for line in lines:
-            txtdoc_r.add_paragraph(content)
-
+        paragraph = txtdoc_r.add_paragraph()
+        paragraph.add_run(content)  # 改行はそのまま出力
         txtdoc_r.save(txtdoc_r_output_path)
 
         #xls,df追加
@@ -402,21 +458,6 @@ def transcribe(File, Model, Computing, Lang, BeamSize, VadFilter, device, progre
         filename_copy = input_file_name
         srt_dummy_output_path = srt_output_path
 
-
-        destination_folder = '/content/drive/My Drive/whisper_finished'
-        # フォルダが存在しなければ作成
-        os.makedirs(destination_folder, exist_ok=True)
-
-        # 移動させたいファイルのパス（例）
-        file_to_move = File
-        destination_file = os.path.join(destination_folder, os.path.basename(file_to_move))
-        if os.path.exists(destination_file):
-            os.remove(destination_file)
-        # ファイルを移動
-        shutil.move(file_to_move, destination_folder)
-
-        print(f"{file_to_move} を {destination_folder} に移動しました")
-        
         return srt_content, txt_nr_content, txt_r_content, main_files, doc_files ,html_srt, html_nr_txt, html_r_txt, filename_copy, srt_dummy_output_path, df_display
     except Exception as e:
         print(f"ファイル処理中にエラーが発生しました: {e}")
