@@ -347,7 +347,7 @@ def gr_components():
         exec_btn.click(
             fn=lambda file_name, *args: t1.transcribe(f"/content/drive/My Drive/whisper_uploads/{file_name}", *args),
             inputs=[file_dropdown, param2, param3, param4, param5, param6, param0],
-            outputs=[result_srt_content, result_txt_nr_content, result_txt_r_content, main_files_path, doc_download_path, html_srt, html_nr_txt, html_r_txt, filename_output, dummy, gr_components_df]
+            outputs=[result_srt_content, result_txt_nr_content, result_txt_r_content, main_files_path, doc_download_path, html_srt, html_nr_txt, html_r_txt, filename_output, dummy, gr_components_df])
         
         t1_clear_Button.click(
             fn=t1_clear,inputs=[],outputs=[param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,file_dropdown]#file_dropdown
