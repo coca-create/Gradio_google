@@ -6,7 +6,7 @@ from datetime import datetime
 import csv
 
 # SpaCyの大規模モデルをロード
-nlp = spacy.load("en_core_web_lg")
+nlp = spacy.load("en_core_web_sm")
 
 # 固有名詞として誤認識されやすい単語をリストに追加
 proper_nouns = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
