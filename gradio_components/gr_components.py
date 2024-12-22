@@ -8,8 +8,43 @@ from tab5 import tab5_func as t5
 from tab7 import tab7_func as t7
 from tab8 import tab8_func as t8
 import pandas as pd
+import os
+import shutil
 
 
+def get_saved_files():
+    save_folder = "/content/drive/My Drive/whisper_uploads"
+    if os.path.exists(save_folder):
+        return os.listdir(save_folder)  # 保存済みファイルの名前を取得
+    return []
+
+# アップロードされたファイルをGoogle Driveに保存し、選択肢を更新する関数
+def upload_and_save_files(filepaths):
+    save_folder = "/content/drive/My Drive/whisper_uploads"
+    if not os.path.exists(save_folder):
+        os.makedirs(save_folder)  # 保存フォルダがなければ作成
+
+    # アップロードされたファイルをGoogle Driveに保存
+    for filepath in filepaths:
+        save_path = os.path.join(save_folder, os.path.basename(filepath))  # ファイル名を保持して保存
+        shutil.copy(filepath, save_path)  # ファイルをGoogle Driveにコピー
+    
+    # 保存済みファイルリストを返す（ドロップダウンを更新）
+    filelist=get_saved_files()
+    #value=filelist[0]
+    if filelist !=[]:
+        return gr.update(choices=filelist,value=filelist[0])
+    else:
+        return gr.update(choices=filelist,value="")
+
+def select_first_file_on_start():
+    # save_folderからファイルを取得し、最初のファイルを選択
+    save_folder = "/content/drive/My Drive/whisper_uploads"
+    file_list = os.listdir(save_folder)
+    if file_list:
+        return gr.update(value=file_list[0])  # 最初のファイルを選択する
+    else:
+        return gr.update(value=None)
 
 def gr_components():
 
@@ -26,7 +61,8 @@ def gr_components():
             gr.Markdown("> 字幕ファイル（srtファイル）、テキストファイル2種、Google翻訳用ワード、エクセルファイルが表示されます。Google翻訳用のファイルが必要な場合はアコーディオンを開いてね。") 
             with gr.Row():
                 with gr.Column():
-                    param1 = gr.File(label="ファイルをアップロードしてね",type="filepath")#,file_types=['mp3','mp4','webm','mkv']
+                    param1 = gr.File(label="ファイルをアップロードしてね",type="filepath",file_count="multiple")#,file_types=['mp3','mp4','webm','mkv']
+                    file_dropdown = gr.Dropdown(label="処理するファイルを選択", choices=get_saved_files())
                     with gr.Row():
                         exec_btn = gr.Button("データファイルの作成", variant="primary")
                         t1_clear_Button=gr.Button(value='クリア')
@@ -265,9 +301,22 @@ def gr_components():
 
 
         ##クリアボタン追加分をまとめる。
+
+        def update_file_dropdown():
+            file_list = get_saved_files()
+            
+            if file_list:
+                return gr.update(choices=file_list, value=file_list[0])  # リストの最初のファイルを選択
+            else:
+                return gr.update(choices=[], value=None)  # リストが空の場合はNoneを設定
+            
         def t1_clear():
             empty_html_table = pd.DataFrame({'1': [''], '2': [''], '3': ['']}).to_html(index=False)
-            return None,"","","",[],[],"","","","","",empty_html_table
+            #new_file_display=select_first_file_on_start()
+            return None,"","","",[],[],"","","","","",empty_html_table,update_file_dropdown()
+        
+
+    
         def t2_clear():
             return "","","",[],pd.DataFrame({'1': [''], '2': [''],'3': ['']})
         def t4_clear():
@@ -285,18 +334,23 @@ def gr_components():
             return None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
 
         ### Tab1 イベントリスナー ###
+            # ファイルアップロード後、Google Driveに保存してドロップダウンを更新
+        param1.upload(fn=upload_and_save_files, inputs=[param1], outputs=[file_dropdown])
         param1.change(fn=param1_change_clear,
                       inputs=[],
                       outputs=[result_srt_content,result_txt_nr_content,result_txt_r_content
                                ,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,
                                translate_srt,translate_nr_txt,translate_r_txt,download_translated_files,button2_df])
+        
+        UI.load(fn=select_first_file_on_start, inputs=[], outputs=[file_dropdown])
+        
         exec_btn.click(
             fn=t1.transcribe,
-            inputs=[param1, param2, param3, param4, param5, param6,param0],
+            inputs=[file_dropdown, param2, param3, param4, param5, param6,param0],
             outputs=[result_srt_content,result_txt_nr_content, result_txt_r_content, main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df])
         
         t1_clear_Button.click(
-            fn=t1_clear,inputs=[],outputs=[param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df]
+            fn=t1_clear,inputs=[],outputs=[param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,file_dropdown]#file_dropdown
         )
         ### Tab2 イベントリスナー ###
         
