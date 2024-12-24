@@ -177,7 +177,7 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
         if ctranslate2.get_cuda_device_count() == 0:
              queue.put(("error","Cudaが選択されていますが、利用できません。"))
              
-    
+    File_to_move=File
     total_duration,File = get_audio_duration(File)
     model = WhisperModel(Model, device=device, compute_type=Computing)
     print(f"using:{device}")
@@ -514,7 +514,7 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
         os.makedirs(destination_folder, exist_ok=True)
 
         # 移動させたいファイルのパス（例）
-        file_to_move = File
+        
         destination_file = os.path.join(destination_folder, os.path.basename(file_to_move))
         if os.path.exists(destination_file):
             os.remove(destination_file)
