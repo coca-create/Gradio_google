@@ -528,7 +528,7 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
     except Exception as e:
         print(f"ファイル処理中にエラーが発生しました: {e}")
         traceback.print_exc()
-       queue.put(("error",None))
+        queue.put(("error",None))
 
 def run_with_progress(File, Model, Computing, Lang, BeamSize, VadFilter, device,progress=gr.Progress()):
     timestamp_patch = datetime.now().strftime("%Y%m%d%H%M%S")
