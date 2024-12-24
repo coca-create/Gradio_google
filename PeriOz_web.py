@@ -5,9 +5,7 @@ import gradio as gr
 from gradio_components import gr_components as gc
 from datetime import datetime
 
-expiration_date = datetime(2025, 1, 31)  # 期限日を設定
-if datetime.now() > expiration_date:
-    raise Exception("このプログラムの有効期限が切れました。")
+
 #import warnings
 
 #warnings.filterwarnings("ignore", category=FutureWarning)
@@ -66,8 +64,9 @@ css="""
     
     
     """
-with gr.Blocks(css=css) as UI:
-    gc.gr_components()
-UI.launch(debug=True,share=True)
+if __name__=="__main__"
+    with gr.Blocks(css=css) as UI:
+        gc.gr_components()
+    UI.launch(debug=True,share=True)
 
 
