@@ -64,7 +64,7 @@ css="""
     
     
     """
-if __name__=="__main__"
+if __name__=="__main__":
     with gr.Blocks(css=css) as UI:
         gc.gr_components()
     UI.launch(debug=True,share=True)
