@@ -177,7 +177,7 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
         if ctranslate2.get_cuda_device_count() == 0:
              queue.put(("error","Cudaが選択されていますが、利用できません。"))
              
-    File_to_move=File
+    file_to_move=File
     total_duration,File = get_audio_duration(File)
     model = WhisperModel(Model, device=device, compute_type=Computing)
     print(f"using:{device}")
