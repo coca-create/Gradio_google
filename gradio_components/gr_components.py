@@ -82,6 +82,7 @@ def gr_components():
                         result_json_content = gr.TextArea(label="JSONファイルの内容を表示", autoscroll=False, show_copy_button=True)
                     '''
                 with gr.Column():
+                    reversal_info=gr.Textbox(label="文字起こしコメント",placeholder="whisperファイルの復活の要否に関する情報です。")
                     main_files_path = gr.File(label="SRT,TXT(NR,R)ファイルのダウンロード", file_count="multiple")
                     
 
@@ -162,7 +163,7 @@ def gr_components():
         def t1_clear():
             empty_html_table = pd.DataFrame({'1': [''], '2': [''], '3': ['']}).to_html(index=False)
             #new_file_display=select_first_file_on_start()
-            return None,"","","",[],[],"","","","","",empty_html_table,update_file_dropdown()
+            return "",None,"","","",[],[],"","","","","",empty_html_table,update_file_dropdown()
         
 
     
@@ -185,12 +186,12 @@ def gr_components():
         UI.load(fn=select_first_file_on_start, inputs=[], outputs=[file_dropdown])
         
         exec_btn.click(
-            fn=lambda file_name, *args: t1.transcribe(f"/content/drive/My Drive/whisper_uploads/{file_name}", *args),
+            fn=lambda file_name, *args: t1.run_with_progress(f"/content/drive/My Drive/whisper_uploads/{file_name}", *args),
             inputs=[file_dropdown, param2, param3, param4, param5, param6, param0],
-            outputs=[result_srt_content, result_txt_nr_content, result_txt_r_content, main_files_path, doc_download_path, html_srt, html_nr_txt, html_r_txt, filename_output, dummy, gr_components_df])
+            outputs=[reversal_info,result_srt_content, result_txt_nr_content, result_txt_r_content, main_files_path, doc_download_path, html_srt, html_nr_txt, html_r_txt, filename_output, dummy, gr_components_df])
         
         t1_clear_Button.click(
-            fn=t1_clear,inputs=[],outputs=[param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,file_dropdown]#file_dropdown
+            fn=t1_clear,inputs=[],outputs=[reversal_info,param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,file_dropdown]#file_dropdown
         )
         ### Tab2 イベントリスナー ###
         
