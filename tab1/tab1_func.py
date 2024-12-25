@@ -523,12 +523,14 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
 
         print(f"{file_to_move} を {destination_folder} に移動しました")
         queue.put(("done",None))
+        return
         
         
     except Exception as e:
         print(f"ファイル処理中にエラーが発生しました: {e}")
         traceback.print_exc()
         queue.put(("error",None))
+        return
 
 def run_with_progress(File, Model, Computing, Lang, BeamSize, VadFilter, device,progress=gr.Progress()):
     timestamp_patch = datetime.now().strftime("%Y%m%d%H%M%S")
