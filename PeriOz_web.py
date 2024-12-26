@@ -4,7 +4,7 @@ import sys
 import gradio as gr
 from gradio_components import gr_components as gc
 from datetime import datetime
-
+import multiprocessing
 
 #import warnings
 
@@ -65,6 +65,7 @@ css="""
     
     """
 if __name__=="__main__":
+    multiprocessing.set_start_method("spawn", force=True)
     with gr.Blocks(css=css) as UI:
         gc.gr_components()
     UI.launch(debug=True,share=True)
