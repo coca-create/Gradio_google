@@ -83,81 +83,113 @@
 
 | Name                | Version      | License              | URL                                                              |
 |---------------------|--------------|----------------------|------------------------------------------------------------------|
-| Jinja2              | 3.1.4        | BSD License          | [Github](https://github.com/pallets/jinja/)                      |
+| Jinja2              | 3.1.5        | BSD License          | [Github](https://github.com/pallets/jinja/)                      |
 | MarkupSafe          | 2.1.5        | BSD License          | [HP](https://palletsprojects.com/p/markupsafe/)                  |
 | PyYAML              | 6.0.2        | MIT License          | [HP](https://pyyaml.org/)                                        |
 | Pygments            | 2.18.0       | BSD License          | [HP](https://pygments.org)                                       |
 | aiofiles            | 23.2.1       | Apache Software License  | [Github](https://github.com/Tinche/aiofiles)                 |
 | annotated-types     | 0.7.0        | MIT License          | [Github](https://github.com/annotated-types/annotated-types)     |
-| anyio               | 4.6.0        | MIT License          | [HP](https://anyio.readthedocs.io/en/stable/versionhistory.html) |
-| av                  | 12.3.0       | BSD License          | [Github](https://github.com/PyAV-Org/PyAV)                       |
-| certifi             | 2024.8.30    | Mozilla Public License 2.0 (MPL 2.0) | [Github](https://github.com/certifi/python-certifi)|
-| charset-normalizer  | 3.4.0        | MIT License          | [Github](https://github.com/Ousret/charset_normalizer)           |
-| click               | 8.1.7        | BSD License          | [HP](https://palletsprojects.com/p/click/)                       |
+| anyio               | 4.7.0        | MIT License          | [HP](https://anyio.readthedocs.io/en/stable/versionhistory.html) |
+| av                  | 14.0.1       | BSD License          | [Github](https://github.com/PyAV-Org/PyAV)                       |
+| catalogue           | 2.0.10       | MIT License          | [Github](https://github.com/explosion/catalogue)            |   
+| certifi             | 2024.12.14    | Mozilla Public License 2.0 (MPL 2.0) | [Github](https://github.com/certifi/python-certifi)|
+| charset-normalizer  | 3.4.1        | MIT License          | [Github](https://github.com/Ousret/charset_normalizer)           |
+| click               | 8.1.8        | BSD License          | [HP](https://palletsprojects.com/p/click/)                       |
+| cloudpathlib                | 0.20.0      | MIT License   | [Github](https://github.com/drivendataorg/cloudpathlib)                        |
 | colorama            | 0.4.6        | BSD License          | [Github](https://github.com/tartley/colorama)                    |
 | coloredlogs         | 15.0.1       | MIT License          | [HP](https://coloredlogs.readthedocs.io)                         |
+| confection                  | 0.1.5       | MIT License    | [Github](https://github.com/explosion/confection)                              |
 | contourpy           | 1.3.0        | BSD License          | [Github](https://github.com/contourpy/contourpy)                 |
 | ctranslate2         | 4.4.0        | MIT License          | [HP](https://opennmt.net)                                        |
+| curated-tokenizers          | 0.0.9       | MIT License        |[Github](https://github.com/explosion/curated-tokenizers)                      |
+| curated-transformers        | 0.1.1       | MIT            | [Github](https://github.com/explosion/curated-transformers)                    |
+| cymem                       | 2.0.10      | MIT License    | [Github](https://github.com/explosion/cymem)                                   |
+| deepmultilingualpunctuation | 1.0.1       | MIT License    | [Github](https://github.com/oliverguhr/deepmultilingualpunctuation)            |
+| en_core_web_trf             | 3.8.0       | MIT        | [HP](https://explosion.ai)                                                 |
 | cycler              | 0.12.1       | BSD License          | [HP](https://matplotlib.org/cycler/)                             |
-| et-xmlfile          | 1.1.0        | MIT License          | [HP](https://foss.heptapod.net/openpyxl/et_xmlfile)              |
-| fastapi             | 0.115.0      | MIT License          | [Github](https://github.com/fastapi/fastapi)                     |
-| faster-whisper      | 1.0.3        | MIT License          | [Github](https://github.com/SYSTRAN/faster-whisper)              |
-| ffmpy               | 0.4.0        | MIT License          | [Github](https://github.com/Ch00k/ffmpy)                         |
+| et-xmlfile          | 2.0.0        | MIT License          | [HP](https://foss.heptapod.net/openpyxl/et_xmlfile)              |
+| fastapi             | 0.115.6      | MIT License          | [Github](https://github.com/fastapi/fastapi)                     |
+| faster-whisper      | 1.1.0        | MIT License          | [Github](https://github.com/SYSTRAN/faster-whisper)              |
+| ffmpy               | 0.5.0        | MIT License          | [Github](https://github.com/Ch00k/ffmpy)                         |
+| ffmpeg-python               | 0.2.0       | Apache Software License    | [Github](https://github.com/kkroening/ffmpeg-python)                           |
 | filelock            | 3.16.1       | The Unlicense (Unlicense) | [Github](https://github.com/tox-dev/py-filelock)            |
-| flatbuffers         | 24.3.25      | Apache Software License  | [HP](https://google.github.io/flatbuffers/)                  |
+| flatbuffers         | 24.12.23      | Apache Software License  | [HP](https://google.github.io/flatbuffers/)                  |
 | fonttools           | 4.54.1       | MIT License          | [Github](http://github.com/fonttools/fonttools)                  |
 | fsspec              | 2024.9.0     | BSD License          | [Github](https://github.com/fsspec/filesystem_spec)              |
-| gradio              | 5.0.1       | Apache Software License | [Github](https://github.com/gradio-app/gradio)                |
-| gradio_client       | 1.4.0        | Apache Software License | [Github](https://github.com/gradio-app/gradio)                |
+| future                      | 1.0.0       | MIT License                                       | [Github](https://python-future.org)                                            |
+| gradio              | 5.8.0       | Apache Software License | [Github](https://github.com/gradio-app/gradio)                |
+| gradio_client       | 1.5.1        | Apache Software License | [Github](https://github.com/gradio-app/gradio)                |
 | h11                 | 0.14.0       | MIT License          | [Github](https://github.com/python-hyper/h11)                    |
-| httpcore            | 1.0.6        | BSD License          | [HP](https://www.encode.io/httpcore/)                            |
-| httpx               | 0.27.2       | BSD License          | [Github](https://github.com/encode/httpx)                        |
-| huggingface-hub     | 0.25.2       | Apache Software License | [Github](https://github.com/huggingface/huggingface_hub)      |
+| httpcore            | 1.0.7        | BSD License          | [HP](https://www.encode.io/httpcore/)                            |
+| httpx               | 0.28.1       | BSD License          | [Github](https://github.com/encode/httpx)                        |
+| huggingface-hub     | 0.27.0       | Apache Software License | [Github](https://github.com/huggingface/huggingface_hub)      |
 | humanfriendly       | 10.0         | MIT License          | [HP](https://humanfriendly.readthedocs.io)                       |
 | idna                | 3.10         | BSD License          | [Github](https://github.com/kjd/idna)                            |
 | importlib_resources | 6.4.5        | Apache Software License | [Github](https://github.com/python/importlib_resources)       |
+| langcodes                   | 3.5.0       | MIT License          | [Github](https://github.com/georgkrause/langcodes)                             |
+| language_data               | 1.3.0       | MIT License        | [Github](https://github.com/georgkrause/language_data)                         |
 | kiwisolver          | 1.4.7        | BSD License          | [Github](https://github.com/nucleic/kiwi)                        |
 | lxml                | 5.3.0        | BSD License          | [HP](https://lxml.de/)                                           |
 | markdown-it-py      | 3.0.0        | MIT License          | [Github](https://github.com/executablebooks/markdown-it-py)      |
+| marisa-trie                 | 1.2.1       | MIT License      | [Github](https://github.com/pytries/marisa-trie)                               |
 | markdown2           | 2.5.1        | MIT License          | [Github](https://github.com/trentm/python-markdown2)             |
 | matplotlib          | 3.9.2        | Python Software Foundation License | [HP](https://matplotlib.org)                       |
 | mdurl               | 0.1.2        | MIT License          | [Github](https://github.com/executablebooks/mdurl)               |
 | mpmath              | 1.3.0        | BSD License          | [HP](http://mpmath.org/)                                         |
+| murmurhash                  | 1.0.11      | MIT License                                       | [Github](https://github.com/explosion/murmurhash)                              |
 | networkx            | 3.2.1        | BSD License          | [HP](https://networkx.org/)                                      |
-| numpy               | 2.1.2        | BSD License          | [HP](https://numpy.org)                                          |
-| onnxruntime         | 1.19.2       | MIT License          | [HP](https://onnxruntime.ai)                                     |
+| numpy               | 1.26.4        | BSD License          | [HP](https://numpy.org)                                          |
+| onnxruntime         | 1.20.1       | MIT License          | [HP](https://onnxruntime.ai)                                     |
 | openpyxl            | 3.1.5        | MIT License          | [HP](https://openpyxl.readthedocs.io)                            |
-| orjson              | 3.10.7       | Apache Software License; MIT License | [Github](https://github.com/ijl/orjson)          |
+| orjson              | 3.10.12       | Apache Software License; MIT License | [Github](https://github.com/ijl/orjson)          |
 | packaging           | 24.2         | Apache Software License; BSD License | [Github](https://github.com/pypa/packaging)      |
 | pandas              | 2.2.3        | BSD License          | [HP](https://pandas.pydata.org)                                  |
-| pillow              | 10.4.0       | Historical Permission Notice and Disclaimer (HPND) | [HP](https://python-pillow.org)    |
-| protobuf            | 5.28.2       | 3-Clause BSD License | [HP](https://developers.google.com/protocol-buffers/)            |
-| pydantic            | 2.9.2        | MIT License          | [Github](https://github.com/pydantic/pydantic)                   |
-| pydantic_core       | 2.23.4       | MIT License          | [Github](https://github.com/pydantic/pydantic-core)              |
+| pillow              | 11.0.0       | Historical Permission Notice and Disclaimer (HPND) | [HP](https://python-pillow.org)    |
+| preshed                     | 3.0.9       | MIT License                                       |[Github](https://github.com/explosion/preshed)                                 |
+| protobuf            | 5.29.2       | 3-Clause BSD License | [HP](https://developers.google.com/protocol-buffers/)            |
+| pydantic            | 2.10.4        | MIT License          | [Github](https://github.com/pydantic/pydantic)                   |
+| pydantic_core       | 2.27.2       | MIT License          | [Github](https://github.com/pydantic/pydantic-core)              |
 | pydub               | 0.25.1       | MIT License          | [HP](http://pydub.com)                                           |
 | pyparsing           | 3.1.4        | MIT License          | [Github](https://github.com/pyparsing/pyparsing/)                |
 | pyreadline3         | 3.5.4        | BSD License          | [Github](https://github.com/pyreadline3/pyreadline3)             |
 | python-dateutil     | 2.9.0.post0  | Apache Software License; BSD License | [Github](https://github.com/dateutil/dateutil)   |
 | python-docx         | 1.1.2        | MIT License          | [Github](https://github.com/python-openxml/python-docx)          |
-| python-multipart    | 0.0.12       | Apache Software License | [Github](https://github.com/Kludex/python-multipart)          |
+| python-multipart    | 0.0.20       | Apache Software License | [Github](https://github.com/Kludex/python-multipart)          |
 | pytz                | 2024.2       | MIT License          | [HP](http://pythonhosted.org/pytz)                               |
 | requests            | 2.32.3       | Apache Software License | [HP](https://requests.readthedocs.io)                         |
 | rich                | 13.9.2       | MIT License          | [Github](https://github.com/Textualize/rich)                     |
-| ruff                | 0.6.9        | MIT License          | [HP](https://docs.astral.sh/ruff)                                |
+| regex                       | 2024.11.6   | Apache Software License      | [Github](https://github.com/mrabarnett/mrab-regex)                             |
+| ruff                | 0.8.4        | MIT License          | [HP](https://docs.astral.sh/ruff)                                |
+| safehttpx                   | 0.1.6       | MIT License    | [Github](https://github.com/gradio-app/safehttpx)                              |
+| safetensors                 | 0.4.5       | Apache Software License  | [Github](https://github.com/huggingface/safetensors)                           |
 | semantic-version    | 2.10.0       | BSD License          | [Github](https://github.com/rbarrois/python-semanticversion)     |
 | shellingham         | 1.5.4        | ISC License (ISCL)   | [Github](https://github.com/sarugaku/shellingham)                |
 | six                 | 1.16.0       | MIT License          | [Github](https://github.com/benjaminp/six)                       |
+| smart-open                  | 7.1.0       | MIT License   | [Github](https://github.com/piskvorky/smart_open)                              |
 | sniffio             | 1.3.1        | Apache Software License; MIT License | [Github](https://github.com/python-trio/sniffio) |
+| spacy                       | 3.8.3       | MIT License    |[HP](https://spacy.io)                                                     |
+| spacy-curated-transformers  | 0.3.0       | MIT        | [Github](https://github.com/explosion/spacy-curated-transformers)              |
+| spacy-legacy                | 3.0.12      | MIT License     | [HP](https://spacy.io)                                                     |
+| spacy-loggers               | 1.0.5       | MIT   |[Github](https://github.com/explosion/spacy-loggers)                           |
+| srsly                       | 2.5.0       | MIT License    | [Github](https://github.com/explosion/srsly)                                   |
 | srt                 | 3.5.3        | MIT License          | [Github](https://github.com/cdown/srt)                           |
-| starlette           | 0.38.6       | BSD License          | [Github](https://github.com/encode/starlette)                    |
-| sympy               | 1.13.3         | BSD License          | [HP](https://sympy.org)                                          |
+| starlette           | 0.41.3       | BSD License          | [Github](https://github.com/encode/starlette)                    |
+| sympy               | 1.13.1         | BSD License          | [HP](https://sympy.org)                                          |
+| thinc                       | 8.3.3       | MIT License       | [Github](https://github.com/explosion/thinc)                                   |
 | tokenizers          | 0.20.0       | Apache Software License | [Github](https://github.com/huggingface/tokenizers)           |
 | tomlkit             | 0.12.0       | MIT License          | [Github](https://github.com/sdispater/tomlkit)                   |
 | tqdm                | 4.66.5       | MIT License; Mozilla Public License 2.0 (MPL 2.0)  | [HP](https://tqdm.github.io)       |
+| torch                       | 2.1.2+cpu   | BSD License                                       | [HP](https://pytorch.org/)                                                 |
+| torchaudio                  | 2.1.2+cpu   | BSD License                                       | [Github](https://github.com/pytorch/audio)                                     |
+| torchvision                 | 0.16.2+cpu  | BSD                                               | [Github](https://github.com/pytorch/vision)                                    |
+| transformers                | 4.47.1      | Apache Software License                           | [Github](https://github.com/huggingface/transformers)                          |
 | typer               | 0.12.5       | MIT License          | [Github](https://github.com/fastapi/typer)                       |
 | typing_extensions   | 4.12.2       | Python Software Foundation License | [Github](https://github.com/python/typing_extensions) |
 | tzdata              | 2024.2       | Apache Software License | [Github](https://github.com/python/tzdata)                    |
-| urllib3             | 2.2.3        | MIT License          | [Github](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)  |
+| urllib3             | 2.3.0        | MIT License          | [Github](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)  |
 | uvicorn             | 0.31.0       | BSD License          | [HP](https://www.uvicorn.org/)                                   |
+| wasabi                      | 1.1.3       | MIT                                               | [Github](https://github.com/explosion/wasabi)                                  |
+| weasel                      | 0.4.1       | MIT License                                       | [Github](https://github.com/explosion/weasel/)                                 |
 | websockets          | 12.0         | BSD License          | [Github](https://github.com/python-websockets/websockets)        |
 | wheel                | 0.44.0       | MIT License          | [Github](https://github.com/pypa/wheel/blob/main/LICENSE.txt)      |
+| wrapt                       | 1.17.0      | BSD License                                       | [Github](https://github.com/GrahamDumpleton/wrapt)                             |
