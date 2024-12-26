@@ -52,7 +52,7 @@ def gr_components():
     with gr.Blocks() as UI:
         gr.Markdown(
             """
-            <h1 style="color:'darkblue'; font-family :'Arial', sans-serif;font-size:36px;"> PeriOz web　- Transcribe - </h1>
+            <h1 style="color:'darkblue'; font-family :'Arial', sans-serif;font-size:36px;"> PeriOz web　- Transcribe & Edit - </h1>
             <p style="color:gray; letter-spacing:0.05em;">OpenAIのfaster-whisperを使っています。字幕の区切りを必ずピリオドにできるのがこのアプリの特徴です。それにより翻訳精度が保たれます。</p>
             """)
         
