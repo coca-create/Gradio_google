@@ -489,8 +489,8 @@ def transcribe(queue,File, Model, Computing, Lang, BeamSize, VadFilter, device):
                 # タイムスタンプ部分を抽出
                 match = re.search(r"(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})", segment)
                 if match:
-                    #start_time = parse_timestamp(match.group(1))
-                    print(start_time)
+                    start_time = parse_timestamp(match.group(1))
+                    #print(start_time)
                     end_time = parse_timestamp(match.group(2))
                     #print(end_time)
                     # 差が20秒以上ならfuncAを実行
@@ -564,7 +564,7 @@ def run_with_progress(File, Model, Computing, Lang, BeamSize, VadFilter, device,
             break
     process.join()
     if flag==True:
-        return "","","", "", [], [] ,"", "", "", "", "", []
+        return "","","", "", [], [] ,"", "", "", "", "","", []
 
     
     
