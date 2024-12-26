@@ -537,8 +537,8 @@ def run_with_progress(File, Model, Computing, Lang, BeamSize, VadFilter, device,
     save_folder = "/content/drive/My Drive/whisper_uploads"
     File = os.path.join(save_folder, File)
     
-    if not os.path.exists(full_path):
-        raise FileNotFoundError(f"File not found: {full_path}")
+    if not os.path.exists(File):
+        raise FileNotFoundError(f"File not found: {File}")
     
     timestamp_patch = datetime.now().strftime("%Y%m%d%H%M%S")
     temp_dir = os.path.join(tempfile.gettempdir(), f"tempdir_{timestamp_patch}")
