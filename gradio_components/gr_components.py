@@ -133,10 +133,20 @@ def gr_components():
             }
 
         ##クリアボタン追加分をまとめる。
+        def update_file_dropdown():
+            file_list = get_saved_files()
+            
+            if file_list:
+                return gr.update(choices=file_list, value=file_list[0])  # リストの最初のファイルを選択
+            else:
+                return gr.update(choices=[], value=None)  # リストが空の場合はNoneを設定
+            
         def t1_clear():
             empty_html_table = pd.DataFrame({'1': [''], '2': [''], '3': ['']}).to_html(index=False)
-            return "",None,"","","",[],[],"","","","","",empty_html_table,[]
+            return "",None,"","","",[],[],"","","","","",empty_html_table,update_file_dropdown(),[]
 
+        def param1_change_clear():
+            return None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
        
 
         def t2_clear():
@@ -156,14 +166,16 @@ def gr_components():
             return "",None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
 
         ### Tab1 イベントリスナー ###
+        param1.upload(fn=upload_and_save_files, inputs=[param1], outputs=[file_dropdown])
         param1.change(fn=param1_change_clear,
                       inputs=[],
                       outputs=[reversal_info,result_srt_content,result_txt_nr_content,result_txt_r_content
                                ,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,
                                translate_srt,translate_nr_txt,translate_r_txt,download_translated_files,button2_df])
+        UI.load(fn=select_first_file_on_start, inputs=[], outputs=[file_dropdown])
         exec_btn.click(
             fn=t1.run_with_progress,
-            inputs=[param1, param2, param3, param4, param5, param6,param0],
+            inputs=[file_dropdown, param2, param3, param4, param5, param6,param0],
             outputs=[reversal_info,result_srt_content,result_txt_nr_content, result_txt_r_content, main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,Dammy_Fiiles])
         reversal_button.click(
             fn=json_rv.run_spacy2,
@@ -172,7 +184,7 @@ def gr_components():
 
         )
         t1_clear_Button.click(
-            fn=t1_clear,inputs=[],outputs=[reversal_info,param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,Dammy_Fiiles]
+            fn=t1_clear,inputs=[],outputs=[reversal_info,param1,result_srt_content,result_txt_nr_content,result_txt_r_content,main_files_path,doc_download_path,html_srt,html_nr_txt,html_r_txt,filename_output,dummy,gr_components_df,file_dropdown,Dammy_Fiiles]
         )
         ### Tab2 イベントリスナー ###
         
