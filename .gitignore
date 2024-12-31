@@ -1,0 +1,11 @@
+
+*.pyc
+*.pyc
+/Jsons
+/gradio_components
+*.pyx
+/Jsons
+/Split
+*.py
+*.py
+/tab1
